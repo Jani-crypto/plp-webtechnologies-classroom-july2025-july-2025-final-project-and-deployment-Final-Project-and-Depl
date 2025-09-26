@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Project - Multipage Website (SPA)</title>
+  <style>
+    /* === GLOBAL STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+      color: #333;
+      padding-bottom: 50px;
+    }
+
+    header, footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      background: #0066cc;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: none;
+      color: white;
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    nav button:hover {
+      background: #004080;
+    }
+
+    main {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    section {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+    }
+
+    /* === CONTACT FORM === */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button.submit-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button.submit-btn:hover {
+      background-color: #218838;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- === HEADER === -->
+  <header>
+    <h1>My Awesome Website</h1>
+    <p>Built with HTML, CSS, and JavaScript</p>
+  </header>
+
+  <!-- === NAVIGATION === -->
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('about')">About</button>
+    <button onclick="showPage('services')">Services</button>
+    <button onclick="showPage('contact')">Contact</button>
+  </nav>
+
+  <!-- === MAIN CONTENT === -->
+  <main>
+    <!-- HOME -->
+    <section id="home" class="active">
+      <h2>Welcome to My Website</h2>
+      <p>This is the home page. It introduces the website and gives a quick overview of what users can expect.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I am a passionate web developer who loves building interactive and responsive websites. This project shows my skills in HTML, CSS, JavaScript, and deployment.</p>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <h2>Services</h2>
+      <ul>
+        <li>Custom Website Design</li>
+        <li>Responsive Layouts</li>
+        <li>Interactive Forms</li>
+        <li>Animation & UX Enhancements</li>
+      </ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <form onsubmit="return validateForm()">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+        <button class="submit-btn" type="submit">Send Message</button>
+        <p class="message" id="formMessage"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- === FOOTER === -->
+  <footer>
+    <p>&copy; 2025 My Awesome Website</p>
+  </footer>
+
+  <!-- === JAVASCRIPT === -->
+  <script>
+    // === Page Navigation ===
+    function showPage(pageId) {
+      const sections = document.querySelectorAll('main section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    // === Form Validation ===
+    function validateForm() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const formMessage = document.getElementById('formMessage');
+
+      if (name.length < 2) {
+        formMessage.textContent = "Name must be at least 2 characters.";
+        formMessage.style.color = "red";
+        return false;
+      }
+
+      if (!email.includes('@') || !email.includes('.')) {
+        formMessage.textContent = "Please enter a valid email.";
+        formMessage.style.color = "red";
+        return false;
+      }
+
+      if (message.length < 10) {
+        formMessage.textContent = "Message must be at least 10 characters.";
+        formMessage.style.color = "red";
+        return false;
+      }
+
+      formMessage.textContent = "Message sent successfully!";
+      formMessage.style.color = "green";
+
+      // Clear form
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('message').value = '';
+
+      return false; // Prevent actual form submission (no backend)
+    }
+  </script>
+</body>
+</html>
